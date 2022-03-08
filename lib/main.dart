@@ -1,30 +1,52 @@
-import 'package:flutter/material.dart';
-import 'poke_detail.dart';
 
-void main() {
-  runApp(MyApp());
+import 'package:flutter/material.dart';
+import 'package:flutter_pokemon_practice/ThemeModerNotifier.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'poke_detail.dart';
+import 'ScreenLightState.dart';
+import 'Setting.dart';
+
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  final SharedPreferences pref = await SharedPreferences.getInstance();
+  final themeModeNotifier = ThemeModeNotifier(pref);
+
+  runApp(ChangeNotifierProvider(
+    create: (context) => themeModeNotifier,
+    child: const MyApp(),
+  ));
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  const MyApp({Key key}) : super(key: key);
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Pokemon Flutter',
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      home: TopPage(),
+    return Consumer<ThemeModeNotifier>(
+      builder: (context, mode, child) => MaterialApp(
+        title: 'Pokemon Flutter',
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        themeMode: mode.mode,
+        home: const TopPage(),
+      ),
     );
   }
 }
+
 
 class TopPage extends StatefulWidget {
   const TopPage({Key key}) : super(key: key);
   @override
   _TopPageState createState() => _TopPageState();
 }
-
-
 
 class _TopPageState extends State<TopPage> {
 
@@ -55,24 +77,6 @@ class _TopPageState extends State<TopPage> {
           ),
         ],
       ),
-    );
-  }
-}
-
-
-class PikaButton extends StatelessWidget {
-  const PikaButton({Key key, int index}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      child: const Text('pikachu'),
-      onPressed: () => {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (BuildContext context) => const PokeDetail(),
-          ),
-        ),
-      },
     );
   }
 }
@@ -123,22 +127,6 @@ class PokeListItem extends StatelessWidget {
           ),
         ),
       },
-    );
-  }
-}
-
-
-class Settings extends StatelessWidget {
-  const Settings({Key key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: const [
-        ListTile(
-          leading: Icon(Icons.lightbulb),
-          title: Text('Dark/Light Mode'),
-        ),
-      ],
     );
   }
 }
