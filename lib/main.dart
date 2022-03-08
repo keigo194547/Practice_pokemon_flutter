@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'poke_detail.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,60 +10,81 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      title: 'Pokemon Flutter',
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      home: TopPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
 
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
+class TopPage extends StatelessWidget {
+  const TopPage({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      body: ListView(
+        children: List.generate(10000, (id) => id)
+            .map((val) => PokeListItem(index: val))
+            .toList(),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+    );
+  }
+}
+
+
+class PikaButton extends StatelessWidget {
+  const PikaButton({Key key, int index}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      child: const Text('pikachu'),
+      onPressed: () => {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) => const PokeDetail(),
+          ),
+        ),
+      },
+    );
+  }
+}
+
+class PokeListItem extends StatelessWidget {
+  const PokeListItem({Key key, this.index}) : super(key: key);
+  final int index;
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Container(
+        width: 80,
+        decoration: BoxDecoration(
+          color: Colors.yellow.withOpacity(.5),
+          borderRadius: BorderRadius.circular(10),
+          image: const DecorationImage(
+            fit: BoxFit.fitWidth,
+            image: NetworkImage(
+              "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      title: const Text(
+        'Pikachu',
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      ),
+      subtitle: const Text(
+        '⚡️electric',
+      ),
+      trailing: const Icon(Icons.navigate_next),
+      onTap: () => {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) => const PokeDetail(),
+          ),
+        ),
+      },
     );
   }
 }
