@@ -7,26 +7,41 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+
+  const MyApp({Key key}) : super(key: key);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeMode themeMode = ThemeMode.system;
+
+  @override
+  void initState() {
+    super.initState();
+    loadThemeMode().then((val) => setState(() => themeMode = val));
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Pokemon Flutter',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: TopPage(),
+      themeMode: themeMode,
+      home: const TopPage(),
     );
   }
 }
+
 
 class TopPage extends StatefulWidget {
   const TopPage({Key key}) : super(key: key);
   @override
   _TopPageState createState() => _TopPageState();
 }
-
-
 
 class _TopPageState extends State<TopPage> {
 
