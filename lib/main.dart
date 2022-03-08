@@ -18,16 +18,42 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
-class TopPage extends StatelessWidget {
+class TopPage extends StatefulWidget {
   const TopPage({Key key}) : super(key: key);
+  @override
+  _TopPageState createState() => _TopPageState();
+}
+
+
+
+class _TopPageState extends State<TopPage> {
+
+  int currentbnb = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: List.generate(10000, (id) => id)
-            .map((val) => PokeListItem(index: val))
-            .toList(),
+
+      body: SafeArea(
+        child: currentbnb == 0 ? const PokeList() : const Settings(),
+      ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (index) => {
+          setState(() => currentbnb = index,
+          )
+        },
+        currentIndex: currentbnb,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'settings',
+          ),
+        ],
       ),
     );
   }
@@ -47,6 +73,18 @@ class PikaButton extends StatelessWidget {
           ),
         ),
       },
+    );
+  }
+}
+
+class PokeList extends StatelessWidget {
+  const PokeList({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+      itemCount: 898,
+      itemBuilder: (context, index) => PokeListItem(index: index),
     );
   }
 }
@@ -85,6 +123,22 @@ class PokeListItem extends StatelessWidget {
           ),
         ),
       },
+    );
+  }
+}
+
+
+class Settings extends StatelessWidget {
+  const Settings({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: const [
+        ListTile(
+          leading: Icon(Icons.lightbulb),
+          title: Text('Dark/Light Mode'),
+        ),
+      ],
     );
   }
 }
