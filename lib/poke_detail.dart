@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokemon_practice/main.dart';
 import 'ScreenLightState.dart';
-
+import 'package:provider/provider.dart';
 
 class PokeDetail extends StatelessWidget {
 

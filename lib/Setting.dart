@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'poke_detail.dart';
 import 'ScreenLightState.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key key}) : super(key: key);
