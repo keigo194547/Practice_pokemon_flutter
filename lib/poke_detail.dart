@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokemon_practice/main.dart';
+import 'ScreenLightState.dart';
 
 
 class PokeDetail extends StatelessWidget {
-  // This widget is the root of your application.
+
   const PokeDetail({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {

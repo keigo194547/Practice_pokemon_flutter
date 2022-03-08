@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'poke_detail.dart';
+import 'ScreenLightState.dart';
+import 'Setting.dart';
 
 void main() {
   runApp(MyApp());
@@ -59,24 +61,6 @@ class _TopPageState extends State<TopPage> {
   }
 }
 
-
-class PikaButton extends StatelessWidget {
-  const PikaButton({Key key, int index}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      child: const Text('pikachu'),
-      onPressed: () => {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (BuildContext context) => const PokeDetail(),
-          ),
-        ),
-      },
-    );
-  }
-}
-
 class PokeList extends StatelessWidget {
   const PokeList({Key key}) : super(key: key);
   @override
@@ -123,22 +107,6 @@ class PokeListItem extends StatelessWidget {
           ),
         ),
       },
-    );
-  }
-}
-
-
-class Settings extends StatelessWidget {
-  const Settings({Key key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: const [
-        ListTile(
-          leading: Icon(Icons.lightbulb),
-          title: Text('Dark/Light Mode'),
-        ),
-      ],
     );
   }
 }
